@@ -6,7 +6,7 @@ import re
 import pdb
 
 
-import homework_05_soln.src.common as common
+import homework_05.src.common as common
 
 
 def main():
@@ -136,10 +136,23 @@ def getScenesData(script):
     -------
     list
     '''
-
-
-
-
+    result = []
+    for lineno, line in enumerate(script):
+        firstword = re.findall(r"\w+", line)
+        if len(firstword)>0:
+            if firstword[0]=='INT' or firstword[0] == 'EXT':
+                newstartno = lineno
+                scenetype = firstword
+                scenedesc = getSceneDescription(line)
+                result.append([newstartno, ' ', scenetype, scenedesc])
+    
+    numScenes = len(result)
+    for sceneno, scene in enumerate(result):
+        if sceneno<numScenes-1:
+            result[sceneno][1] = result[sceneno+1][0]
+        else:
+            result[sceneno][1] = len(script)
+    return result
 
 def sceneType(line):
     '''
@@ -154,8 +167,7 @@ def sceneType(line):
     string: either "INT" or "EXT" depending on scene type
 
     '''
-
-
+    return re.findall(r"\w+", line)[0]
 
 def getSceneDescription(line):
     '''
@@ -170,7 +182,8 @@ def getSceneDescription(line):
     -------
     string
 
-    '''
+	    '''
+    return re.findall(r" .+", line)[0].strip()
 
 
 

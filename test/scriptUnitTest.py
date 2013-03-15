@@ -3,8 +3,8 @@ import unittest
 import pdb
 
 
-import homework_05_soln.src.common as common
-from homework_05_soln.src.scriptParser import *
+import homework_05.src.common as common
+from homework_05.src.scriptParser import *
 
 
 
