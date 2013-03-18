@@ -183,8 +183,8 @@ def getSceneDescription(line):
     string
 
 	    '''
-    return re.findall(r" .+", line)[0].strip()
-
+    desc = line.split('.',1)[1].strip()
+    return desc 
 
 
 if __name__ == "__main__":
