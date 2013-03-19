@@ -3,9 +3,11 @@ import unittest
 import pdb
 
 
-import homework_05_soln.src.common as common
-from homework_05_soln.src.scriptParser import *
+import homework_05.src.common as common
+from homework_05.src.scriptParser import *
 
+#import homework_05_soln.src.common as common
+#from homework_05_soln.src.scriptParser import *
 
 
 class TestScript(unittest.TestCase):
@@ -62,10 +64,11 @@ class TestScriptBasic(unittest.TestCase):
         self.assertEquals(sceneDesc, 'SUBMARINE, ESCAPE HATCH - CONTINUOUS')
 
     def test_sceneType(self):
-        #pdb.set_trace()
+       
         sceneT = sceneType(self.sceneHead)
         self.assertEquals(sceneT, 'EXT')
 
+    #pdb.set_trace()
     def test_firstNoneSpacePos(self):
         fnsp = getFirstNonSpacePos(self.sceneHead)
         self.assertIs(fnsp, 7)
