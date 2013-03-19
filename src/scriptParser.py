@@ -142,7 +142,7 @@ def getScenesData(script):
         if len(firstword)>0:
             if firstword[0]=='INT' or firstword[0] == 'EXT':
                 newstartno = lineno
-                scenetype = firstword
+                scenetype = sceneType(line)
                 scenedesc = getSceneDescription(line)
                 result.append([newstartno, ' ', scenetype, scenedesc])
     
