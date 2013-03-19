@@ -6,7 +6,7 @@ import re
 import pdb
 
 
-import homework_05_soln.src.common as common
+import homework_05.src.common as common
 
 
 def main():
@@ -98,13 +98,24 @@ def getFirstNonSpacePos(line):
     __________
 
     line: string
-
     Returns
     _______
     numeric or None
     
     '''
 
+    #pdb.set_trace()
+    # Written by cShieh
+    index_pos = 0
+    for char in line:
+        if char != '\t' and char != '\n' and char != ' ':
+            break
+        if index_pos == len(line):
+            index_pos = -1
+            break
+        index_pos = index_pos + 1
+       
+    return index_pos
     
 def getSpeaker(line):
     '''
