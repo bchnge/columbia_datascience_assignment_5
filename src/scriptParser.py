@@ -138,13 +138,13 @@ def getScenesData(script):
     '''
     result = []
     for lineno, line in enumerate(script):
-        firstword = re.findall(r"\w+", line)
-        if len(firstword)>0:
-            if firstword[0]=='INT' or firstword[0] == 'EXT':
-                newstartno = lineno
-                scenetype = sceneType(line)
-                scenedesc = getSceneDescription(line)
-                result.append([newstartno, ' ', scenetype, scenedesc])
+        intext = re.search("INT\.|EXT\.", line)
+        if intext:
+            strippedLine = line[intext.start():]
+            newstartno = lineno
+            scenetype = sceneType(strippedLine)
+            scenedesc = getSceneDescription(strippedLine)
+            result.append([newstartno, ' ', scenetype, scenedesc])
     
     numScenes = len(result)
     for sceneno, scene in enumerate(result):
