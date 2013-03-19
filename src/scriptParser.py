@@ -147,10 +147,23 @@ def getScenesData(script):
     -------
     list
     '''
-
-
-
-
+    result = []
+    for lineno, line in enumerate(script):
+        intext = re.search("INT\.|EXT\.", line)
+        if intext:
+            strippedLine = line[intext.start():]
+            newstartno = lineno
+            scenetype = sceneType(strippedLine)
+            scenedesc = getSceneDescription(strippedLine)
+            result.append([newstartno, ' ', scenetype, scenedesc])
+    
+    numScenes = len(result)
+    for sceneno, scene in enumerate(result):
+        if sceneno<numScenes-1:
+            result[sceneno][1] = result[sceneno+1][0]
+        else:
+            result[sceneno][1] = len(script)
+    return result
 
 def sceneType(line):
     '''
@@ -165,8 +178,7 @@ def sceneType(line):
     string: either "INT" or "EXT" depending on scene type
 
     '''
-
-
+    return re.findall(r"\w+", line)[0]
 
 def getSceneDescription(line):
     '''
@@ -181,8 +193,9 @@ def getSceneDescription(line):
     -------
     string
 
-    '''
-
+	    '''
+    desc = line.split('.',1)[1].strip()
+    return desc 
 
 
 if __name__ == "__main__":
