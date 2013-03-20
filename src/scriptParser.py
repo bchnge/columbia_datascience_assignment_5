@@ -178,7 +178,12 @@ def sceneType(line):
     string: either "INT" or "EXT" depending on scene type
 
     '''
-    return re.findall(r"\w+", line)[0]
+
+    if len(re.findall(r"INT.", line)) == 1:
+        sType="INT"
+    elif len(re.findall(r"EXT.", line)) == 1:
+        sType="EXT"    
+    return sType
 
 def getSceneDescription(line):
     '''
@@ -194,7 +199,10 @@ def getSceneDescription(line):
     string
 
 	    '''
-    desc = line.split('.',1)[1].strip()
+
+
+    desc = re.sub("(EXT.)|(INT.)", "", line).strip()
+    #desc = line.split('.',1)[1].strip()
     return desc 
 
 
