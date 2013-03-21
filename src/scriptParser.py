@@ -104,7 +104,7 @@ def getSpeakers(script):
     for word in Lis:
 	cnt[word] += 2
     return list(cnt)
- 	   
+ ##I am not sure with some functions used, will test it when we have getSpeaker(line)	   
 
 def getFirstNonSpacePos(line):
     '''
