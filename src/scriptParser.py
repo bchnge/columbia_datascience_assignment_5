@@ -88,7 +88,23 @@ def getSpeakers(script):
     There are a number of different ways to extract the speakers names from a script. One way is to first identify the position where these names appear, i.e. count the number of whitespace, and then extract just the name from the line. Since we are dealing with speakers and not with all characters, you can assume that each speaker is followed by a section of dialogue. You will also have to make sure that you are treating both whitespaces and tabs in the same manner; one way to do this is to convert all whitespaces to tabs with the re.sub(). 
     In order to minimize the number of false positives, we will only list speakers who appear more than once in the script. The Counter() funtion from the python collections library is a good choice for this. 
     '''
-
+    #wenjun 
+    space = 0
+    Lis = []
+    Charac = []
+    tab_width = 8	
+    for line in script:
+	line = re.sub(r"{"+'tab_width'+r"}",r"\t",line)
+	space = getFirstNonSpacePos(line)
+	if space > 25:	
+	    Lis.append(getSpeaker(line))
+	else:
+	    pass
+    cnt = Counter()
+    for word in Lis:
+	cnt[word] += 2
+    return list(cnt)
+ 	   
 
 def getFirstNonSpacePos(line):
     '''
