@@ -88,16 +88,18 @@ def getSpeakers(script):
     There are a number of different ways to extract the speakers names from a script. One way is to first identify the position where these names appear, i.e. count the number of whitespace, and then extract just the name from the line. Since we are dealing with speakers and not with all characters, you can assume that each speaker is followed by a section of dialogue. You will also have to make sure that you are treating both whitespaces and tabs in the same manner; one way to do this is to convert all whitespaces to tabs with the re.sub(). 
     In order to minimize the number of false positives, we will only list speakers who appear more than once in the script. The Counter() funtion from the python collections library is a good choice for this. 
     '''
+    #pdb.set_trace()
     space = 0
     Lis = []
     Charac = []
     tab_width = 8	
     for line in script:
-	line = re.sub(r"{"+'tab_width'+r"}",r"\t",line)
+	#line = re.sub(r"{"+'tab_width'+r"}",r"\t",line)
+	line = re.sub(r"\t",' '*tab_width,line)
 	space = getFirstNonSpacePos(line)
 	if space > 25:	
 	    newSpeaker = getSpeaker(line)
-	    if newSpeaker!=None and newSpeaker!=[]:
+	    if len(newSpeaker)>1:
 	      Lis.append(newSpeaker)
 	else:
 	    pass
@@ -125,6 +127,16 @@ def getFirstNonSpacePos(line):
      index_pos = 0
     else:
      index_pos = m.end()-1
+    '''
+    index_pos = 0
+    for char in line:
+        if char != '\t' and char != '\n' and char != ' ':
+            break
+        if index_pos == len(line):
+            index_pos = -1
+            break
+        index_pos = index_pos + 1  
+    '''  
     
     return index_pos
     
@@ -145,7 +157,7 @@ def getSpeaker(line):
   
     # Assuming the line contains either one or two words
     #pdb.set_trace()
-    speakerName = None 
+    speakerName = '' 
     t = re.findall(r"(\w+)",line)
     
     if len(t)==2:   
@@ -153,10 +165,11 @@ def getSpeaker(line):
     elif len(t)==1:
       speakerName = re.findall(r"(\s[A-Z]+\s)",line)
     
+    
     # This will strip white spaces
     if len(speakerName)==1:
-      speakerName = re.findall(r"([A-Z]+\s[A-Z]+|[A-Z]+)",speakerName[0])
-      speakerName = speakerName[0]
+      #speakerName = re.findall(r"([A-Z]+\s[A-Z]+|[A-Z]+)",speakerName[0])
+      speakerName = speakerName[0].strip()
   
     return speakerName
 
