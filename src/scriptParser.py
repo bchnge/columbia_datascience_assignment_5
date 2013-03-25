@@ -188,7 +188,7 @@ def getScenesData(script):
     '''
     result = []
     for lineno, line in enumerate(script):
-        intext = re.search("INT\.|EXT\.", line)
+        intext = re.search("INT.|EXT.", line)
         if intext:
             strippedLine = line[intext.start():]
             newstartno = lineno
